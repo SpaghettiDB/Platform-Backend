@@ -1,0 +1,31 @@
+{
+  "name": "platform-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KinanaDB/Platform-Backend.git"
+  },
+  "author": "Amr Mohamed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KinanaDB/Platform-Backend/issues"
+  },
+  "homepage": "https://github.com/KinanaDB/Platform-Backend#readme",
+  "dependencies": {
+    "async": "^3.2.5",
+    "babel": "^6.23.0",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "nodemon": "^3.0.3",
+    "react": "^18.2.0",
+    "tailwindcss": "^3.4.1",
+    "webpack": "^5.90.0"
+  }
+}
