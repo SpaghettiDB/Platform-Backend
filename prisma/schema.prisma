@@ -26,8 +26,8 @@ model Team {
 model TeamMembers {
   teamId Int
   userId Int
-  team   Team       @relation(fields: [teamId], references: [id])
-  user   User       @relation(fields: [userId], references: [id])
+  team   Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   role   MemberRole @default(MEMBER)
 
   @@id([teamId, userId])
