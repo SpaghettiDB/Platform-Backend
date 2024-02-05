@@ -1,9 +1,8 @@
 import express from "express";
-import login from './routes/login.js';
-const bodyParser = require('body-parser');
-const register = require('./routes/user.js');
-
-
+import bodyParser from "body-parser";
+import register from "./routes/user.js";
+import cookieParser from "cookie-parser";
+import { tokenAuth } from "./controllers/user.js";
 
 const app = express();
 const port = 3000;
@@ -11,12 +10,11 @@ const port = 3000;
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use("/", register);
 
-app.use('/',login);
-app.use('/', register);
-
-app.get("/", (req, res) => {
-  res.send("Response OK");
+app.get("/", tokenAuth, (req, res) => {
+  res.send(`Logged in as: ${req.user.email}`);
 });
 
 app.listen(port, () => {
