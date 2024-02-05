@@ -80,3 +80,8 @@ export const registerController = async (req, res) => {
     }
   }
 };
+
+export const logoutController = async (req, res) => {
+  res.clearCookie("access-token");
+  res.status(200).send(`Logged out successfully`);
+};
