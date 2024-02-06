@@ -37,7 +37,7 @@ model Project {
   id        Int        @id @default(autoincrement())
   name      String
   teamId    Int
-  team      Team       @relation(fields: [teamId], references: [id])
+  team      Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
   databases Database[]
 }
 
@@ -47,7 +47,7 @@ model Database {
   createdAt DateTime @default(now())
   storage   Int
   projectId Int
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   status    status   @default(INACTIVE)
 }
 
