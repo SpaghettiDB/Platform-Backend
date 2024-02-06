@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-const prisma = new PrismaClient();
 const secretKey = process.env.SECRET_KEY;
+import * as userModel from "../models/userModel.js";
 
 export const tokenAuth = (req, res, next) => {
   const token = req.cookies["access-token"];
@@ -21,11 +20,7 @@ export const tokenAuth = (req, res, next) => {
 
 export const loginController = async (req, res) => {
   const { email, password } = req.body;
-  const user = await prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-  });
+  const user = await userModel.getUser(email);
   if (user === null) {
     res.status(400).send("Email does not exist");
   } else {
@@ -47,36 +42,26 @@ export const loginController = async (req, res) => {
       }
     } catch (err) {
       res.status(400).send("Invalid password");
-    } finally {
-      prisma.$disconnect;
     }
   }
 };
 
 export const registerController = async (req, res) => {
   const { email, username, password } = req.body;
-  const userExists = await prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-  });
+  const userExists = await userModel.getUser(email);
   if (userExists) {
     res.send("This Email already exists");
   } else {
     const hashedPassword = await bcrypt.hash(password, 10);
     try {
-      await prisma.user.create({
-        data: {
-          email: email,
-          name: username,
-          password: hashedPassword,
-        },
+      const createdUser = await userModel.createUser({
+        email: email,
+        name: username,
+        password: hashedPassword,
       });
-      res.status(201).send("User created successfully");
+      res.status(201).send(`User ${createdUser.email} created successfully`);
     } catch {
       res.status(500).send();
-    } finally {
-      prisma.$disconnect;
     }
   }
 };
