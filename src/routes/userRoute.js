@@ -3,7 +3,7 @@ import {
   loginController,
   registerController,
   logoutController,
-} from "../controllers/user.js";
+} from "../controllers/userController.js";
 const route = express.Router();
 
 route.post("/login", loginController);
