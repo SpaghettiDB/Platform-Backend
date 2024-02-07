@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  # Node.js App
+  node-app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    command: npm start
+
+# PostgreSQL Database
+  postgres:
+    image: "postgres:latest"
+    container_name: "postgres"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "postgres"
+    ports:
+      - "5432:5432"
