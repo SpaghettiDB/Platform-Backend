@@ -15,4 +15,6 @@ jobs:
           github.event_name == 'push' &&
           github.event.pull_request == null &&
           !contains(github.event.head_commit.message, '[force]')
-        run: exit 1 # Exit with an error code to fail the workflow
+        run: 
+          echo "Warning: Direct pushes to the main branch without force are not recommended. Please use pull requests for code review."
+          exit 1
