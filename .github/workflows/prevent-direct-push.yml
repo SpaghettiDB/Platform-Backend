@@ -1,0 +1,19 @@
+name: Prevent Direct Pushes to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prevent_direct_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if push is direct to main and not a force push
+        if: >
+          github.ref == 'refs/heads/main' && 
+          github.event_name == 'push' && 
+          github.event.pull_request == null && 
+          github.event.head_commit != null
+        run: exit 1 # Exit with an error code to fail the workflow
