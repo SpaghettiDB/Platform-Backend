@@ -1,0 +1,20 @@
+name: Enforce Policy for Main Branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  enforce_policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if push is to main and force push
+        if: >
+          github.ref == 'refs/heads/main' &&
+          github.event_name == 'push' &&
+          github.event.pull_request == null &&
+          !contains(github.event.head_commit.message, '[force]')
+        run: 
+          echo "Warning: Direct pushes to the main branch without force are not recommended. Please use pull requests for code review."
+          exit 1
