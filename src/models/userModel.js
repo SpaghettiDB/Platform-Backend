@@ -1,5 +1,4 @@
-import { prisma } from "../utils/db.js";
-
+import { prisma } from "../utils/db.js"
 export async function createUser(userData) {
   /* userData is an object with the following properties:
   {
@@ -7,16 +6,15 @@ export async function createUser(userData) {
     email: "EMAIL",
     password: "PASSWORD"
   } */
-  ///try
   const user = await prisma.user.create({
     data: userData,
-  });
-  return user;
+  })
+  return user
 }
 
 export async function allUsers() {
-  const users = await prisma.user.findMany();
-  return users;
+  const users = await prisma.user.findMany()
+  return users
 }
 
 export async function getUser(email) {
@@ -25,8 +23,8 @@ export async function getUser(email) {
       email: email,
     },
     include: { teams: { include: { team: true } } },
-  });
-  return user;
+  })
+  return user
 }
 
 export async function getUserId(e_mail) {
@@ -37,22 +35,22 @@ export async function getUserId(e_mail) {
     select: {
       id: true,
     },
-  });
-  return user_id;
+  })
+  return user_id
 }
 
 export async function deleteUser(e_mail, pass) {
-  const user = await getUser(e_mail);
+  const user = await getUser(e_mail)
   if (user && user.password === pass) {
     await prisma.user.delete({
       where: {
         email: e_mail,
         password: pass,
       },
-    });
-    return true;
+    })
+    return true
   }
-  return false;
+  return false
 }
 
 export async function updateUser(e_mail, userData) {
@@ -67,8 +65,8 @@ export async function updateUser(e_mail, userData) {
         email: e_mail,
       },
       data: userData,
-    });
-    return updated_user;
+    })
+    return updated_user
   }
-  return false;
+  return false
 }

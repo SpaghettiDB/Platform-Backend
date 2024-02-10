@@ -1,6 +1,5 @@
-import { prisma } from "../utils/db.js";
-import { getUserId } from "./userModel.js";
-
+import { prisma } from "../utils/db.js"
+import { getUserId } from "./userModel.js"
 export async function createTeam(leader_id, Name) {
   const team = await prisma.team.create({
     data: {
@@ -16,10 +15,9 @@ export async function createTeam(leader_id, Name) {
         ],
       },
     },
-  });
-  return team;
+  })
+  return team
 }
-
 export async function memberExist(team_id, user_id) {
   const exist = await prisma.teamMembers.findUnique({
     where: {
@@ -28,14 +26,13 @@ export async function memberExist(team_id, user_id) {
         userId: user_id,
       },
     },
-  });
-  return exist;
+  })
+  return exist
 }
-
 export async function addMember(team_id, memberEmail) {
-  const user_id = await getUserId(memberEmail);
+  const user_id = await getUserId(memberEmail)
   if (!user_id) {
-    return false;
+    return false
   }
   if (!(await memberExist(team_id, user_id.id))) {
     await prisma.teamMembers.create({
@@ -47,27 +44,27 @@ export async function addMember(team_id, memberEmail) {
           connect: { id: team_id },
         },
       },
-    });
-    return true;
+    })
+    return true
   } else {
-    return false;
+    return false
   }
 }
 
 export async function deleteMember(team_id, e_mail) {
-  const user_id = await getUserId(e_mail);
-  if (!user_id) {
-    return false;
+  const user = await getUserId(e_mail)
+  if (!user) {
+    return false
   }
-  const team = await prisma.teamMembers.delete({
+  await prisma.teamMembers.delete({
     where: {
       teamId_userId: {
         teamId: team_id,
-        userId: user_id.id,
+        userId: user.id,
       },
     },
-  });
-  return true;
+  })
+  return true
 }
 
 export async function getTeam(team_id) {
@@ -76,8 +73,8 @@ export async function getTeam(team_id) {
       id: team_id,
     },
     include: { members: { include: { user: true } } },
-  });
-  return team;
+  })
+  return team
 }
 
 export async function updateTeam(team_id, Name) {
@@ -88,8 +85,8 @@ export async function updateTeam(team_id, Name) {
     data: {
       name: Name,
     },
-  });
-  return team;
+  })
+  return team
 }
 
 export async function deleteTeam(team_id) {
@@ -97,5 +94,5 @@ export async function deleteTeam(team_id) {
     where: {
       id: team_id,
     },
-  });
+  })
 }

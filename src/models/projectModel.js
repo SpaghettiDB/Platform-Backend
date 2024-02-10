@@ -1,5 +1,4 @@
-import { prisma } from "../utils/db.js";
-
+import { prisma } from "../utils/db.js"
 export async function createProject(teamId, projectName) {
   const proj = await prisma.project.create({
     data: {
@@ -10,28 +9,25 @@ export async function createProject(teamId, projectName) {
       },
       name: projectName,
     },
-  });
-  return proj;
+  })
+  return proj
 }
-
 export async function getProject(projectId) {
   const proj = await prisma.project.findUnique({
     where: {
       id: projectId,
     },
-  });
-  return proj;
+  })
+  return proj
 }
-
 export async function getProjectUUID(projectUUID) {
   const proj = await prisma.project.findFirst({
     where: {
       uuid: projectUUID,
     },
-  });
-  return proj;
+  })
+  return proj
 }
-
 export async function allProjects(teamId) {
   const projs = await prisma.project.findMany({
     where: {
@@ -57,18 +53,17 @@ export async function allProjects(teamId) {
         },
       },
     },
-  });
-  return projs;
+  })
+  return projs
 }
-
 export async function deleteProject(projectId) {
-  await prisma.project.delete({
+  const deletedProject = await prisma.project.delete({
     where: {
       id: projectId,
     },
-  });
+  })
+  return deletedProject ? true : false
 }
-
 export async function updateProject(projectId, projectName) {
   const proj = await prisma.project.update({
     where: {
@@ -77,6 +72,6 @@ export async function updateProject(projectId, projectName) {
     data: {
       name: projectName,
     },
-  });
-  return proj;
+  })
+  return proj
 }
