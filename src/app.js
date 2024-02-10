@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/',login);
 app.use('/', register);
+app.use('/', grant);
 
 app.get("/", (req, res) => {
   res.send("Response OK");

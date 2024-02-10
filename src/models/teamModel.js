@@ -97,3 +97,16 @@ export async function deleteTeam (team_id) {
     }
   })
 }
+
+export async function updateMember(team_id, user_id)  {
+  await prisma.teamMembers.update({
+     where: {
+       teamId_userId: {
+         teamId: team_id,
+         userId: user_id.id
+       },
+       role:'LEADER'
+       }
+     })
+   return true
+ }
