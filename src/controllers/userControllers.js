@@ -1,7 +1,7 @@
 import { updateUser } from '../models/userModel';
 
 
-export const loginUser  = (req,res) => {
+export const loginUserControllers  = (req,res) => {
   const ref_email = "1234@gmail.com"
   const ref_pass = "1234";
   let {email, pass } = req.body;
@@ -16,7 +16,7 @@ export const loginUser  = (req,res) => {
 
 
 const users = [];
-export const registerUser = (req, res) => {
+export const registerUserControllers = (req, res) => {
   const { email, username, password } = req.body;
 
   if (users.find((user) => user.email === email)) {
@@ -28,7 +28,7 @@ export const registerUser = (req, res) => {
   res.status(201).send('User registered successfully.');
 };
 
-export const resetpassUser = async (req, res) => {
+export const resetpassUserControllers = async (req, res) => {
   const {email, newPassword} = req.body;
   const newUser = await updateUser(email, {password: newPassword})
   if (newUser) {
@@ -40,7 +40,7 @@ export const resetpassUser = async (req, res) => {
 };
 
 
-export const updateinfoUser= async (req, res) => {
+export const updateinfoUserControllers = async (req, res) => {
   const {email, newName} = req.body;
   const newUser = await updateUser(email, {name: newName})
   if (newUser) {

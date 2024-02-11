@@ -1,11 +1,10 @@
 import express from "express";
-import { loginController, registerController} from '../controllers/user.js';
-// , resetpassController, updateinfoController 
-const route = express.Router();
+import { loginUserControllers, registerUserControllers, resetpassUserControllers, updateinfoUserControllers } from '../controllers/userControllers.js';
+const routeUser = express.Router();
 
-route.post('/login',loginController);
-route.post('/register', registerController);
-// route.post('/user/reset', resetpassController);
-// route.post('/user/update', updateinfoController);
+routeUser.post('/user/login',loginUserControllers);
+routeUser.post('/user/register', registerUserControllers);
+routeUser.post('/user/reset', resetpassUserControllers);
+routeUser.post('/user/update', updateinfoUserControllers);
 
-export default route;
+export default routeUser;
