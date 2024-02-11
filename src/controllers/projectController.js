@@ -23,7 +23,10 @@ export const createProject = async (req, res) => {
   }
 };
 
-export const updateProject = async (req, res) => {};
+export const updateProject = async (req, res) => {
+  const { projectID, newName } = req.body;
+  res.send(await updateProject(projectID, newName));
+};
 export const joinProject = async (req, res) => {
   const uuid = req.body.uuid;
   const project = await projectModel.getProjectUUID(uuid);
@@ -48,7 +51,11 @@ export const joinProject = async (req, res) => {
   }
 };
 
-export const deleteProject = async (req, res) => {};
+export const deleteProject = async (req, res) => {
+  const { projectID } = req.body;
+  await deleteProject(projectID);
+  res.send('project deleted');
+};
 
 export const listProjects = async (req, res) => {
   const activeTeam = req.body.teamId;
