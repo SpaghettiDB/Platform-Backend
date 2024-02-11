@@ -4,6 +4,7 @@ import userRoute from "./routes/userRoute.js";
 import cookieParser from "cookie-parser";
 import { tokenAuth } from "./middlewares/authMiddleware.js";
 import projectRoute from "./routes/projectRoute.js";
+import DatabaseRoute from "./routes/databaseRoute.js";
 
 const app = express();
 const port = 3000;
@@ -19,6 +20,7 @@ app.get("/", tokenAuth, (req, res) => {
 });
 
 app.use("/project", projectRoute);
+app.use("/database", DatabaseRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
