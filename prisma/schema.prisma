@@ -39,6 +39,7 @@ model Project {
   teamId    Int
   team      Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
   databases Database[]
+  uuid      String     @default(uuid())
 }
 
 model Database {
