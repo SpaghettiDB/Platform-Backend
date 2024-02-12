@@ -120,7 +120,7 @@ The schema consists of the following entities:
 - `password`: Hashed password of the user
 - `role`: Role of the user, default: `USER`
 - Relationships:
-  `teams` Many-to-many relationship with Team entity through TeamMembers property
+  - `teams` Many-to-many relationship with Team entity through TeamMembers property
 
 ###### Suggestions
 
@@ -133,8 +133,8 @@ The schema consists of the following entities:
 - `id` Auto-incremented unique identifier for the team
 - `name` Name of the team
 - Relationships:
-  `members` One-to-many relationship with team members
-  `projects` One-to-many relationship with projects
+  - `members` One-to-many relationship with team members
+  - `projects` One-to-many relationship with projects
 
 ###### Suggestions
 
@@ -146,8 +146,8 @@ The schema consists of the following entities:
 - `userId` Foreign key referencing the id column of the User table, pointing to the user that is a member of the team
 - `role` Role of the member in the team, default: `MEMBER`
 - Relationships:
-  `team` Many-to-one relationship with teams
-  `user` Many-to-one relationship with users
+  - `team` Many-to-one relationship with teams
+  - `user` Many-to-one relationship with users
 
 ##### Project
 
@@ -156,8 +156,8 @@ The schema consists of the following entities:
 - `teamId` Foreign key referencing the id column of the Team table, pointing to the team that created the project
 - `uuid` Unique UUID identifier for the project
 - Relationships:
-  `team` Many-to-one relationship with the team that creates the projects
-  `databases` One-to-many relationship with databases associated with the project
+  - `team` Many-to-one relationship with the team that creates the projects
+  - `databases` One-to-many relationship with databases associated with the project
 
 ###### Suggestions
 
@@ -172,7 +172,7 @@ The schema consists of the following entities:
 - `storage` Storage capacity of the database
 - `projectId` Foreign key referencing the id column of the Project table, pointing to the project that the database belongs to
 - Relationships:
-  `project` Many-to-one relationship with the project
+  - `project` Many-to-one relationship with the project
 
 ### Enums
 
