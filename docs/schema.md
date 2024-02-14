@@ -16,6 +16,10 @@ This is a a comprehensive overview of the database schema used in the platform, 
 - Prisma is a Node.js and Typescript ORM with an intuitive data model, automated migrations, type-safety,
   and auto-completion. It defines the main configuration of the data models in a file called `schema.prisma`
 
+### ERD Diagram
+
+![ERD diagram of the schema](./prisma-erd.svg "ERD Diagram of the schema")
+
 ## Schema Description
 
 ### Generator
@@ -47,68 +51,68 @@ The schema consists of the following entities:
 
 - **User:** Represents users of the system.
 
-  ```prisma
-  model User {
-    id       Int           @id @default(autoincrement())
-    email    String        @unique
-    name     String
-    password String
-    role     UserRole      @default(USER)
-    teams    TeamMembers[]
-  }
-  ```
+```prisma
+model User {
+  id       Int           @id @default(autoincrement())
+  email    String        @unique
+  name     String
+  password String
+  role     UserRole      @default(USER)
+  teams    TeamMembers[]
+}
+```
 
 - **Team:** Represents teams with members and projects.
 
-  ```prisma
-  model Team {
-    id       Int           @id @default(autoincrement())
-    name     String
-    members  TeamMembers[]
-    projects Project[]
-  }
-  ```
+```prisma
+model Team {
+  id       Int           @id @default(autoincrement())
+  name     String
+  members  TeamMembers[]
+  projects Project[]
+}
+```
 
 - **TeamMembers:** Represents the relationship between users and teams, including their roles.
 
-  ```prisma
-  model TeamMembers {
-    teamId Int
-    userId Int
-    team   Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
-    user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-    role   MemberRole @default(MEMBER)
+```prisma
+model TeamMembers {
+  teamId Int
+  userId Int
+  team   Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   MemberRole @default(MEMBER)
 
-    @@id([teamId, userId])
-  }
-  ```
+  @@id([teamId, userId])
+}
+```
 
 - **Project:** Represents projects belonging to teams.
 
-  ```prisma
-  model Project {
-    id        Int        @id @default(autoincrement())
-    name      String
-    teamId    Int
-    team      Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
-    databases Database[]
-    uuid      String     @default(uuid())
-  }
-  ```
+```prisma
+model Project {
+  id        Int        @id @default(autoincrement())
+  name      String
+  teamId    Int
+  team      Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  databases Database[]
+  uuid      String     @default(uuid())
+}
+```
 
 - **Database:** Represents databases associated with projects.
 
-  ```prisma
-  model Database {
-    id        String   @id @default(uuid())
-    name      String
-    createdAt DateTime @default(now())
-    storage   Int
-    projectId Int
-    project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-    status    status   @default(INACTIVE)
-  }
-  ```
+```prisma
+model Database {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  storage   Int
+  projectId Int
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  status    status   @default(INACTIVE)
+}
+```
 
 #### Entity Details
 
@@ -122,12 +126,6 @@ The schema consists of the following entities:
 - Relationships:
   - `teams` Many-to-many relationship with Team entity through TeamMembers property
 
-###### Suggestions
-
-- implementing a unique constraint on the email column
-- Adding an image column for profile pictures of users
-- Adding a column to store the user's preferred language and another for his preferred timezone
-
 ##### Team
 
 - `id` Auto-incremented unique identifier for the team
@@ -135,10 +133,6 @@ The schema consists of the following entities:
 - Relationships:
   - `members` One-to-many relationship with team members
   - `projects` One-to-many relationship with projects
-
-###### Suggestions
-
-- Adding a column to store a description of the team and its goals
 
 ##### TeamMembers
 
@@ -158,11 +152,6 @@ The schema consists of the following entities:
 - Relationships:
   - `team` Many-to-one relationship with the team that creates the projects
   - `databases` One-to-many relationship with databases associated with the project
-
-###### Suggestions
-
-- Adding a column to store a description of the project
-- Combining the `id` and `uuid` columns in a single column `id` that uses a uuid to identify the project
 
 ##### Database
 
@@ -220,7 +209,3 @@ enum status {
   SLEEP
 }
 ```
-
-### ERD Diagram
-
-![1707762267097](./prisma-erd.svg)
