@@ -116,6 +116,7 @@ model Database {
 
 ### ERD Diagram
 
+This ERD Diagram helps visualize the relationships between each entity in the schema and how they depend on each other
 ![ERD diagram of the schema](./prisma-erd.svg "ERD Diagram of the schema")
 
 ### Entity Details
