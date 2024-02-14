@@ -1,4 +1,4 @@
-# Prisma Schema Documentation
+# Schema Documentation
 
 ## Overview
 
@@ -16,11 +16,9 @@ This is a a comprehensive overview of the database schema used in the platform, 
 - Prisma is a Node.js and Typescript ORM with an intuitive data model, automated migrations, type-safety,
   and auto-completion. It defines the main configuration of the data models in a file called `schema.prisma`
 
-### ERD Diagram
+## Prisma Components
 
-![ERD diagram of the schema](./prisma-erd.svg "ERD Diagram of the schema")
-
-## Schema Description
+We depend on Prisma as an ORM to connect our application to the database using the following components:
 
 ### Generator
 
@@ -42,6 +40,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 ```
+
+## Schema Description
 
 ### Entities
 
@@ -114,9 +114,13 @@ model Database {
 }
 ```
 
-#### Entity Details
+### ERD Diagram
 
-##### User
+![ERD diagram of the schema](./prisma-erd.svg "ERD Diagram of the schema")
+
+### Entity Details
+
+#### User
 
 - `id`: Auto-incremented unique identifier for the user.
 - `email`: Unique email address of the user.
@@ -126,7 +130,7 @@ model Database {
 - Relationships:
   - `teams` Many-to-many relationship with Team entity through TeamMembers property
 
-##### Team
+#### Team
 
 - `id` Auto-incremented unique identifier for the team
 - `name` Name of the team
@@ -134,7 +138,7 @@ model Database {
   - `members` One-to-many relationship with team members
   - `projects` One-to-many relationship with projects
 
-##### TeamMembers
+#### TeamMembers
 
 - `teamId` Foreign key referencing the id column of the Team table, pointing to the team that the member belongs to
 - `userId` Foreign key referencing the id column of the User table, pointing to the user that is a member of the team
@@ -143,7 +147,7 @@ model Database {
   - `team` Many-to-one relationship with teams
   - `user` Many-to-one relationship with users
 
-##### Project
+#### Project
 
 - `id` Auto-incremented unique identifier for the project
 - `name` Name of the project
@@ -153,7 +157,7 @@ model Database {
   - `team` Many-to-one relationship with the team that creates the projects
   - `databases` One-to-many relationship with databases associated with the project
 
-##### Database
+#### Database
 
 - `id` Unique UUID identifier for the database
 - `name`Name of the database
