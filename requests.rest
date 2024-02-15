@@ -59,3 +59,133 @@ Content-Type: application/json
 {
     "teamId": 1
 }
+
+
+//______________________________________________________
+
+###
+// Register user
+
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "email": "s@g.com",
+    "username": "salma",
+    "password": "1234"
+}
+
+###
+// Login user
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "s@g.com",
+    "password": "1234"
+}
+
+###
+// Create team
+
+POST http://localhost:3000/team
+Content-Type: application/json
+
+{
+    "teamName": "team5",
+    "leaderId": 1
+}
+
+###
+// Add member to team
+
+PUT http://localhost:3000/team/member
+Content-Type: application/json
+
+{
+    "memberEmail": "s@g.com",
+    "teamId": 5,
+    "userId": 1
+}
+
+###
+// Get code of team
+
+PUT http://localhost:3000/team/code
+Content-Type: application/json
+
+{
+    "teamId": 1,
+    "userId": 2
+}
+
+
+###
+// Join a team
+
+PUT http://localhost:3000/team/join
+Content-Type: application/json
+
+{
+    "token": "eaff7ffa",
+    "userId": 1
+}
+
+
+###
+// Update team
+
+PUT http://localhost:3000/team
+Content-Type: application/json
+
+{
+    "name": "sssss",
+    "teamId": 2,
+    "userId": 2
+}
+
+###
+// Get all users of the team
+
+GET http://localhost:3000/team/users
+Content-Type: application/json
+
+{
+    "teamId": 5,
+    "userId": 1
+}
+
+###
+// List all teams of the user
+
+GET http://localhost:3000/team
+Content-Type: application/json
+
+{
+    "email": "s@g.com"
+}
+
+###
+// Delete member from team
+
+DELETE  http://localhost:3000/team/member
+Content-Type: application/json
+
+{
+    "memberEmail": "amr11@g.com",
+    "teamId": 1,
+    "userId": 2
+}
+
+
+###
+// Delete team
+
+DELETE  http://localhost:3000/team
+Content-Type: application/json
+
+{
+    "teamId": 3,
+    "userId": 2
+}
