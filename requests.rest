@@ -93,8 +93,7 @@ POST http://localhost:3000/team
 Content-Type: application/json
 
 {
-    "teamName": "team5",
-    "leaderId": 1
+    "teamName": "team9"
 }
 
 ###
@@ -104,9 +103,8 @@ PUT http://localhost:3000/team/member
 Content-Type: application/json
 
 {
-    "memberEmail": "s@g.com",
-    "teamId": 5,
-    "userId": 1
+    "memberEmail": "amr11@g.com",
+    "teamId": 5
 }
 
 ###
@@ -116,8 +114,7 @@ PUT http://localhost:3000/team/code
 Content-Type: application/json
 
 {
-    "teamId": 1,
-    "userId": 2
+    "teamId": 9
 }
 
 
@@ -128,8 +125,7 @@ PUT http://localhost:3000/team/join
 Content-Type: application/json
 
 {
-    "token": "eaff7ffa",
-    "userId": 1
+    "token": "2c1ce63e"
 }
 
 
@@ -140,9 +136,8 @@ PUT http://localhost:3000/team
 Content-Type: application/json
 
 {
-    "name": "sssss",
-    "teamId": 2,
-    "userId": 2
+    "newName": "sssss",
+    "teamId": 9
 }
 
 ###
@@ -152,8 +147,7 @@ GET http://localhost:3000/team/users
 Content-Type: application/json
 
 {
-    "teamId": 5,
-    "userId": 1
+    "teamId": 9
 }
 
 ###
@@ -162,9 +156,7 @@ Content-Type: application/json
 GET http://localhost:3000/team
 Content-Type: application/json
 
-{
-    "email": "s@g.com"
-}
+
 
 ###
 // Delete member from team
@@ -174,8 +166,7 @@ Content-Type: application/json
 
 {
     "memberEmail": "amr11@g.com",
-    "teamId": 1,
-    "userId": 2
+    "teamId": 4
 }
 
 
@@ -186,6 +177,5 @@ DELETE  http://localhost:3000/team
 Content-Type: application/json
 
 {
-    "teamId": 3,
-    "userId": 2
+    "teamId": 8
 }
