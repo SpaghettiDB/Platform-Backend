@@ -11,13 +11,15 @@ export async function isLeader(teamId, userId) {
 }
 
 export const createTeam = asyncHandler(async (req, res) => {
-  const { teamName, leaderId } = req.body;
+  const { teamName } = req.body;
+  const leaderId = req.user.id;
   const newTeam = await teamModel.createTeam(teamName, leaderId);
   res.status(201).json({ message: "Team created successfully" });
 });
 
 export const addMember = asyncHandler(async (req, res) => {
-  const { memberEmail, teamId, userId } = req.body;
+  const { memberEmail, teamId } = req.body;
+  const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const addedMember = await teamModel.addMember(memberEmail, teamId);
     if (addedMember) {
@@ -31,7 +33,8 @@ export const addMember = asyncHandler(async (req, res) => {
 });
 
 export const deleteMember = asyncHandler(async (req, res) => {
-  const { memberEmail, teamId, userId } = req.body;
+  const { memberEmail, teamId } = req.body;
+  const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const deletedMember = await teamModel.deleteMember(memberEmail, teamId);
     if (deletedMember) {
@@ -45,7 +48,8 @@ export const deleteMember = asyncHandler(async (req, res) => {
 });
 
 export const updateTeam = asyncHandler(async (req, res) => {
-  const { newName, teamId, userId } = req.body;
+  const { newName, teamId } = req.body;
+  const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     await teamModel.updateTeam(newName, teamId);
     res.status(201).json({ message: "Team updated successfully" });
@@ -55,7 +59,8 @@ export const updateTeam = asyncHandler(async (req, res) => {
 });
 
 export const deleteTeam = asyncHandler(async (req, res) => {
-  const { teamId, userId } = req.body;
+  const { teamId } = req.body;
+  const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     await teamModel.deleteTeam(teamId);
     res.status(201).json({ message: "Team deleted successfully" });
@@ -65,13 +70,13 @@ export const deleteTeam = asyncHandler(async (req, res) => {
 });
 
 export const getUsersInTeam = asyncHandler(async (req, res) => {
-  const teamId = req.body.teamId;
+  const { teamId } = req.body;
   const team = await teamModel.getTeam(teamId);
   res.status(200).json(team[0].members.map((member) => member.user.email));
 });
 
 export const allTeamsOfUser = asyncHandler(async (req, res) => {
-  const email = req.body.email;
+  const email = req.user.email;
   const user = await getUser(email);
   if (user.teams) {
     res.status(200).json(
@@ -86,7 +91,8 @@ export const allTeamsOfUser = asyncHandler(async (req, res) => {
 });
 
 export const teamToken = asyncHandler(async (req, res) => {
-  const { teamId, userId } = req.body;
+  const { teamId } = req.body;
+  const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const token = await teamModel.tokenForTeam(teamId);
     res.status(200).json({ Code: token });
@@ -96,7 +102,8 @@ export const teamToken = asyncHandler(async (req, res) => {
 });
 
 export const joinTeam = asyncHandler(async (req, res) => {
-  const { token, userId } = req.body;
+  const { token } = req.body;
+  const userId = req.user.id;
   const joinedTeam = await teamModel.joinTeam(token, userId);
   if (joinedTeam) {
     res.status(201).json({ message: "Joined team successfully" });
