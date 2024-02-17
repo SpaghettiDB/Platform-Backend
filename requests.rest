@@ -1,0 +1,61 @@
+// Register user
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "email": "amr11@g.com",
+    "username": "amr",
+    "password": "1234"
+}
+
+###
+// Login user
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "amr11@g.com",
+    "password": "1234"
+}
+
+###
+// Home Page
+
+GET http://localhost:3000/
+
+###
+// Logout user
+
+POST http://localhost:3000/logout
+
+###
+// Create Project
+
+POST http://localhost:3000/project/create
+Content-Type: application/json
+
+{
+    "teamId": 1,
+    "projectName": "newProject"
+}
+
+###
+// Join Project using uuid
+
+POST http://localhost:3000/project/join
+Content-Type: application/json
+
+{
+    "uuid": "d742cdcd-4802-41e3-9f95-f5bb25a7c774"
+}
+
+###
+// List Projects of team
+
+GET http://localhost:3000/project/
+Content-Type: application/json
+
+{
+    "teamId": 1
+}
