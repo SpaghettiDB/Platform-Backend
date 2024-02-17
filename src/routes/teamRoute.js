@@ -12,9 +12,9 @@ router
   .put(tokenAuth, teamController.updateTeam);
 router
   .route("/member")
+  .get(tokenAuth, teamController.getMembers)
   .put(tokenAuth, teamController.addMember)
   .delete(tokenAuth, teamController.deleteMember);
-router.get("/users", tokenAuth, teamController.getUsersInTeam);
 router.put("/join", tokenAuth, teamController.joinTeam);
 router.put("/code", tokenAuth, teamController.teamToken);
 

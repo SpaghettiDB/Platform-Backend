@@ -69,7 +69,7 @@ export const deleteTeam = asyncHandler(async (req, res) => {
   }
 });
 
-export const getUsersInTeam = asyncHandler(async (req, res) => {
+export const getMembers = asyncHandler(async (req, res) => {
   const { teamId } = req.body;
   const team = await teamModel.getTeam(teamId);
   res.status(200).json(team[0].members.map((member) => member.user.email));
