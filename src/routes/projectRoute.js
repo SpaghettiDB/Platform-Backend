@@ -10,10 +10,12 @@ import { tokenAuth } from "../middlewares/authMiddleware.js";
 
 const route = express.Router();
 
-route.post("/create", tokenAuth, createProject);
-route.post("/update", tokenAuth, updateProject);
-route.post("/delete", tokenAuth, deleteProject);
+route
+  .route("/")
+  .get(tokenAuth, listProjects)
+  .post(tokenAuth, createProject)
+  .put(tokenAuth, updateProject)
+  .delete(tokenAuth, deleteProject);
 route.post("/join", tokenAuth, joinProject);
-route.get("/", tokenAuth, listProjects);
 
 export default route;
