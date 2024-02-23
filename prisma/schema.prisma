@@ -19,6 +19,8 @@ model User {
 model Team {
   id       Int           @id @default(autoincrement())
   name     String
+  token    String?        @unique
+  expiry   DateTime?
   members  TeamMembers[]
   projects Project[]
 }
