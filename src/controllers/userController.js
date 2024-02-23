@@ -62,8 +62,8 @@ export const grantController = async (req, res) => {
   const existingMember = await memberExist(team_id, user_id);
 
   if (!existingMember) {
-    console.log('No team member with the given user id');
+    return res.status(404).json({ message: "No team member with the given user id" });
   }
   await updateMember(team_id, user_id);
-    console.log('Successfully updated the role');
+  res.status(200).json({ message: `Successfully updated the role` });
 };
