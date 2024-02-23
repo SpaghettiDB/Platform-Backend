@@ -9,7 +9,7 @@ export const loginController = async (req, res) => {
   const { email, password } = req.body;
   const user = await userModel.getUser(email);
   if (user === null) {
-    res.status(400).json({ error: "Email does not exist" });
+    res.status(404).json({ error: "Email does not exist" });
   } else {
     try {
       if (await bcrypt.compare(password, user.password)) {
@@ -24,7 +24,7 @@ export const loginController = async (req, res) => {
           .json({ accessToken: token });
       }
     } catch (err) {
-      res.status(400).json({ error: "Invalid password" });
+      res.status(401).json({ error: "Invalid password" });
     }
   }
 };
