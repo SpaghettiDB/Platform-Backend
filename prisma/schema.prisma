@@ -19,6 +19,8 @@ model User {
 model Team {
   id       Int           @id @default(autoincrement())
   name     String
+  token    String?        @unique
+  expiry   DateTime?
   members  TeamMembers[]
   projects Project[]
 }
@@ -39,6 +41,7 @@ model Project {
   teamId    Int
   team      Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
   databases Database[]
+  uuid      String     @default(uuid())
 }
 
 model Database {

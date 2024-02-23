@@ -1,99 +1,112 @@
-import { prisma } from '../utils/db.js'
-import { getUserId } from './userModel.js'
+import { prisma } from "../utils/db.js";
+import { getUserId } from "./userModel.js";
+import crypto from "crypto";
 
-export async function createTeam (leader_id, Name) {
-  const team = await prisma.team.create({
-    data: {
-      name: Name,
-      members: {
-        create: [
-          {
-            role: 'LEADER',
-            user: {
-              connect: { id: leader_id }
-            }
-          }
-        ]
-      }
-    }
-  })
-  return team
-}
-
-export async function memberExist (team_id, user_id) {
+export async function memberExist(teamId, userId) {
   const exist = await prisma.teamMembers.findUnique({
     where: {
       teamId_userId: {
-        teamId: team_id,
-        userId: user_id
-      }
-    }
-  })
-  return exist
-}
-
-export async function addMember (team_id, memberEmail) {
-  const user_id = await getUserId(memberEmail)
-  if (!user_id) {
-    return false
-  }
-  if (!(await memberExist(team_id, user_id.id))) {
-    const team = await prisma.teamMembers.create({
-      data: {
-        user: {
-          connect: { id: user_id.id }
-        },
-        team: {
-          connect: { id: team_id }
-        }
-      }
-    })
-  }
-  return true
-}
-
-export async function deleteMember (team_id, e_mail) {
-  const user_id = await getUserId(e_mail)
-  if (!user_id) {
-    return false
-  }
-  const team = await prisma.teamMembers.delete({
-    where: {
-      teamId_userId: {
-        teamId: team_id,
-        userId: user_id.id
-      }
-    }
-  })
-  return true
-}
-
-export async function getTeam (team_id) {
-  const team = await prisma.team.findUnique({
-    where: {
-      id: team_id
+        teamId: teamId,
+        userId: userId,
+      },
     },
-    include: { members: { include: { user: true } } }
-  })
-  return team
+  });
+  return exist;
 }
 
-export async function updateTeam (team_id, Name) {
-  const team = await prisma.team.update({
-    where: {
-      id: team_id
-    },
+export async function createTeam(teamName, leaderId) {
+  const team = await prisma.team.create({
     data: {
-      name: Name
-    }
-  })
-  return team
+      name: teamName,
+      members: {
+        create: [
+          {
+            role: "LEADER",
+            user: { connect: { id: leaderId } },
+          },
+        ],
+      },
+    },
+  });
+  return team;
 }
 
-export async function deleteTeam (team_id) {
+export async function addMember(memberEmail, teamId) {
+  const member = await getUserId(memberEmail);
+  if (!(await memberExist(teamId, member.id))) {
+    await prisma.teamMembers.create({
+      data: {
+        user: { connect: { id: member.id } },
+        team: { connect: { id: teamId } },
+      },
+    });
+    return true;
+  }
+  return false;
+}
+
+export async function deleteMember(memberEmail, teamId) {
+  const member = await getUserId(memberEmail);
+  if (await memberExist(teamId, member.id)) {
+    await prisma.teamMembers.delete({
+      where: {
+        teamId_userId: {
+          teamId: teamId,
+          userId: member.id,
+        },
+      },
+    });
+    return true;
+  }
+  return false;
+}
+
+export async function getTeam(teamId) {
+  const team = await prisma.team.findMany({
+    where: { id: teamId },
+    select: { members: { select: { user: true } } },
+  });
+  return team;
+}
+
+export async function updateTeam(newName, teamId) {
+  const team = await prisma.team.update({
+    where: { id: teamId },
+    data: { name: newName },
+  });
+  return team;
+}
+
+export async function deleteTeam(teamId) {
   await prisma.team.delete({
-    where: {
-      id: team_id
-    }
-  })
+    where: { id: teamId },
+  });
+}
+
+export async function tokenForTeam(teamId) {
+  let token;
+  do {
+    token = crypto.randomBytes(8).toString("hex").substring(0, 8);
+  } while (await prisma.team.findUnique({ where: { token } }));
+  await prisma.team.update({
+    where: { id: teamId },
+    data: { token: token, expiry: new Date(Date.now() + 24 * 60 * 60 * 1000) },
+  });
+  return token;
+}
+
+export async function joinTeam(token, userId) {
+  const team = await prisma.team.findFirst({
+    where: { token: token, expiry: { gt: new Date() } },
+  });
+  if (team) {
+    await prisma.teamMembers.create({
+      data: {
+        user: { connect: { id: userId } },
+        team: { connect: { id: team.id } },
+      },
+    });
+    return true;
+  }
+  return false;
 }

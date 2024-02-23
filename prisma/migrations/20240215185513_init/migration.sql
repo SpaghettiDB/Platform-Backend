@@ -22,6 +22,8 @@ CREATE TABLE "User" (
 CREATE TABLE "Team" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "token" TEXT,
+    "expiry" TIMESTAMP(3),
 
     CONSTRAINT "Team_pkey" PRIMARY KEY ("id")
 );
@@ -40,6 +42,7 @@ CREATE TABLE "Project" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "teamId" INTEGER NOT NULL,
+    "uuid" TEXT NOT NULL,
 
     CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
 );
@@ -58,6 +61,9 @@ CREATE TABLE "Database" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Team_token_key" ON "Team"("token");
 
 -- AddForeignKey
 ALTER TABLE "TeamMembers" ADD CONSTRAINT "TeamMembers_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
