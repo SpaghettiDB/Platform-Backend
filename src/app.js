@@ -3,6 +3,7 @@ import userRoute from "./routes/userRoute.js";
 import cookieParser from "cookie-parser";
 import { tokenAuth } from "./middlewares/authMiddleware.js";
 import projectRoute from "./routes/projectRoute.js";
+import DatabaseRoute from "./routes/databaseRoute.js";
 import teamRoute from "./routes/teamRoute.js";
 
 const app = express();
@@ -17,8 +18,9 @@ app.get("/", tokenAuth, (req, res) => {
   res.send(`Logged in as: ${req.user.email}`);
 });
 
-app.use("/project", projectRoute);
 app.use("/team", teamRoute);
+app.use("/project", projectRoute);
+app.use("/database", DatabaseRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
