@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 const secretKey = process.env.SECRET_KEY;
 import * as userModel from "../models/userModel.js";
 import * as teamModel from "../models/teamModel.js";
+import { memberExist, updateMember } from "../models/teamModel";
 
 export const loginController = async (req, res) => {
   const { email, password } = req.body;
@@ -54,4 +55,15 @@ export const registerController = async (req, res) => {
 export const logoutController = async (req, res) => {
   res.clearCookie("access-token");
   res.status(200).json({ message: `Logged out successfully` });
+};
+
+export const grantController = async (req, res) => {
+  const { team_id, user_id} = req.body;
+  const existingMember = await memberExist(team_id, user_id);
+
+  if (!existingMember) {
+    console.log('No team member with the given user id');
+  }
+  await updateMember(team_id, user_id);
+    console.log('Successfully updated the role');
 };

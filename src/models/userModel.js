@@ -70,3 +70,14 @@ export async function updateUser(e_mail, userData) {
   }
   return false
 }
+export async function userRole (e_mail) {
+  const user_Role = await prisma.user.findUnique({
+    where: {
+      email: e_mail
+    },
+    select: {
+      role: true
+    }
+  })
+  return user_Role
+}
