@@ -1,5 +1,5 @@
-# user endpoints
-user endpoints provide access to users data. it helps in registering new accounts and securly  logging in and out from accounts
+# User Endpoints
+user authintication plays a critical role in protecting users data. it permits authenticated users only to access their resourses and user endpoints ensures that. user endpoints help in registering new accounts and securly logging in and out from accounts. 
 
 ##  /register
 This endpoint creates a new user account by taking email, name, and password. The endpoint verifies that the email address doesn't already exist in the database, hashes the user's password, and then saves the user's data.
@@ -65,8 +65,8 @@ if user exists
 }
 ```
 #### **Error handling**
-* 400 : Email does not exist
-* 400 : Invalid password
+* 404 : Email does not exist
+* 401 : Invalid password
 
 
 ##  /logout
