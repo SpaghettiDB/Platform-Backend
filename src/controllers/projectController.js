@@ -25,7 +25,7 @@ export const createProject = async (req, res) => {
 
 export const updateProject = async (req, res) => {
   const { projectID, newName } = req.body;
-  res.send(await updateProject(projectID, newName));
+  res.send(await projectModel.updateProject(+projectID, newName));
 };
 export const joinProject = async (req, res) => {
   const uuid = req.body.uuid;
@@ -52,12 +52,21 @@ export const joinProject = async (req, res) => {
 };
 
 export const deleteProject = async (req, res) => {
-  const { projectID } = req.body;
+  const projectID = +(req.params.projectID)
   await deleteProject(projectID);
   res.send('project deleted');
 };
 
 export const listProjects = async (req, res) => {
-  const activeTeam = req.body.teamId;
+  const activeTeam = +(req.query.teamId);
   res.json({ projects: await projectModel.allProjects(activeTeam) });
 };
+
+export const getProject = async (req, res) => {
+  const projectID = +(req.params.projectID)
+  const project = await projectModel.getProject(projectID)
+  if (project){
+    return res.status(200).json(project)    
+  }
+  return res.status(404).json({message: "project doesn't exist"})
+}

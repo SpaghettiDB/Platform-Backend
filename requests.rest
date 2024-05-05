@@ -36,7 +36,7 @@ POST http://localhost:3000/project/create
 Content-Type: application/json
 
 {
-    "teamId": 1,
+    "teamId": 3,
     "projectName": "newProject"
 }
 
@@ -49,16 +49,16 @@ Content-Type: application/json
 {
     "uuid": "d742cdcd-4802-41e3-9f95-f5bb25a7c774"
 }
-
 ###
-// List Projects of team
+GET http://localhost:3000/project?teamId=3
+###
+GET http://localhost:3000/project/5
+###
+// List members of team
 
-GET http://localhost:3000/project/
-Content-Type: application/json
-
-{
-    "teamId": 1
-}
+GET http://localhost:3000/team/1/member
+###
+post  http://localhost:3000/project/delete/5
 
 
 //______________________________________________________
@@ -143,12 +143,9 @@ Content-Type: application/json
 ###
 // Get all users of the team
 
-GET http://localhost:3000/team/member
+GET http://localhost:3000/team/1/member
 Content-Type: application/json
 
-{
-    "teamId": 7
-}
 
 ###
 // List all teams of the user
@@ -156,8 +153,10 @@ Content-Type: application/json
 GET http://localhost:3000/team
 Content-Type: application/json
 
+###
 
 
+DELETE  http://localhost:3000/database/c7abcf80-a9e6-40c6-ba40-2e4231a05693?projectId=5
 ###
 // Delete member from team
 
@@ -179,3 +178,17 @@ Content-Type: application/json
 {
     "teamId": 8
 }
+
+###
+// Delete member from team
+
+
+POST http://localhost:3000/project/create
+Content-Type: application/json
+
+{
+    "teamId": "2",
+    "projectName": "project2"
+}
+
+###

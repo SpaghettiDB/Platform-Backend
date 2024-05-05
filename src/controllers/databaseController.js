@@ -34,13 +34,16 @@ export const updateDatabase = async (req, res) => {
 };
 
 export const deleteDatabase = async (req, res) => {
-  const { projectId, databaseId } = req.body;
-  const database = await dataModel.getDatabase(databaseId);
+  const databaseID = req.params.databaseID;
+  const projectId = +(req.query.projectId)
+  const database = await dataModel.getDatabase(databaseID);
   if (!database || database.projectId != projectId) {
     return res
       .status(404)
       .json({ message: "database doesn't exist in the project" });
   }
-  await dataModel.deleteDatabase(databaseId);
-  res.status(204);
+  await dataModel.deleteDatabase(databaseID);
+  res
+  .status(204)
+  .json({ message: "database deleted successfully" });
 };
