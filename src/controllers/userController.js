@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 const secretKey = process.env.SECRET_KEY;
 import * as userModel from "../models/userModel.js";
 import * as teamModel from "../models/teamModel.js";
-import { memberExist, updateMember } from "../models/teamModel";
+import { memberExist, updateMember } from "../models/teamModel.js";
 
 export const loginController = async (req, res) => {
   const { email, password } = req.body;

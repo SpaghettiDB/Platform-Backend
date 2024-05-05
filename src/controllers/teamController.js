@@ -70,9 +70,13 @@ export const deleteTeam = asyncHandler(async (req, res) => {
 });
 
 export const getMembers = asyncHandler(async (req, res) => {
-  const { teamId } = req.body;
-  const team = await teamModel.getTeam(teamId);
-  res.status(200).json(team[0].members.map((member) => member.user.email));
+  const { teamId } = req.params;
+  const team = await teamModel.getTeam(+teamId);
+  res.status(200).json(team.members.map((member) => ({
+    email: member.user.email,
+    name: member.user.name,
+    role: member.role
+  })));
 });
 
 export const allTeamsOfUser = asyncHandler(async (req, res) => {

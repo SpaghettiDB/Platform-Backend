@@ -62,11 +62,13 @@ export async function deleteMember(memberEmail, teamId) {
 }
 
 export async function getTeam(teamId) {
-  const team = await prisma.team.findMany({
-    where: { id: teamId },
-    select: { members: { select: { user: true } } },
-  });
-  return team;
+  const team = await prisma.team.findUnique({
+    where: {
+      id: teamId,
+    },
+    include: { members: { include: { user: true } } },
+  })
+  return team
 }
 
 export async function updateTeam(newName, teamId) {

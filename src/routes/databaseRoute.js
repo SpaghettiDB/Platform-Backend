@@ -8,7 +8,10 @@ import {
 
 const route = express.Router();
 
-route.get("/", tokenAuth, databaseAccess, control.getDatabase);
+route.get("/",
+tokenAuth,
+databaseAccess,
+control.getDatabase);
 route.post(
   "/",
   tokenAuth,
@@ -24,7 +27,7 @@ route.put(
   control.updateDatabase
 );
 route.delete(
-  "/",
+  "/:databaseID",
   tokenAuth,
   databaseAccess,
   authorizedUser,
