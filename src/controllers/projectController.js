@@ -65,8 +65,27 @@ export const listProjects = async (req, res) => {
 export const getProject = async (req, res) => {
   const projectID = +(req.params.projectID)
   const project = await projectModel.getProject(projectID)
-  if (project){
-    return res.status(200).json(project)    
+  if (project) {
+    return res.status(200).json(project)
   }
-  return res.status(404).json({message: "project doesn't exist"})
+  return res.status(404).json({ message: "project doesn't exist" })
 }
+
+export const getUserProject = async (req, res) => {
+  const { projectId, userId } = req.params;
+  const user = await projectModel.getUser(projectId, userId);
+  if (user) {
+    return res.status(200).json(user);
+  }
+  return res.status(404).json({ message: 'User not found in this project' });
+};
+
+export const addUserProject = async (req, res) => {
+  const { projectId } = req.params;
+  const { userId } = req.body;
+  const projectUser = await addUser(projectId, userId);
+  if (projectUser) {
+    return res.status(201).json(projectUser);
+  }
+  return res.status(500).json({ error: error.message });
+};

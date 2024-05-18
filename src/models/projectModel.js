@@ -75,3 +75,33 @@ export async function updateProject(projectId, projectName) {
   })
   return proj
 }
+
+export async function addUser(projectId, userId) {
+  const projectUser = await prisma.projectUsers.create({
+    data: {
+      projectId: projectId,
+      userId: userId,
+    },
+  })
+  return projectUser
+}
+
+export async function getUser(projectId, userId) {
+  const projectUser = await prisma.projectUsers.findFirst({
+    where: {
+      projectId: projectId,
+      userId: userId,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          role: true,
+        },
+      },
+    },
+  })
+  return projectUser ? projectUser.user : null
+}
