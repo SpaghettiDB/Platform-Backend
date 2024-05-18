@@ -5,7 +5,9 @@ import {
   deleteProject,
   joinProject,
   listProjects,
-  getProject
+  getProject,
+  getUserProject,
+  addUserProject
 } from "../controllers/projectController.js";
 import { tokenAuth } from "../middlewares/authMiddleware.js";
 
@@ -17,5 +19,7 @@ route.post("/delete/:projectID", tokenAuth, deleteProject);
 route.post("/join", tokenAuth, joinProject);
 route.get("/:projectID", tokenAuth, getProject)
 route.get("/", tokenAuth, listProjects);
+route.get("/:projectID/users/:userID", tokenAuth, getUserProject);
+route.post("/:projectID/users", tokenAuth, addUserProject);
 
 export default route;
