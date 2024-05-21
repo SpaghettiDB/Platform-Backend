@@ -24,7 +24,7 @@ model Team {
   expiry   DateTime?
   members  TeamMembers[]
   projects ProjectUsers[]
-  Project  Project[]
+  project  Project[]
 }
 
 model TeamMembers {

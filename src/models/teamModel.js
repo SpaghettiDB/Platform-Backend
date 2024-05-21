@@ -67,8 +67,8 @@ export async function getTeam(teamId) {
       id: teamId,
     },
     include: { members: { include: { user: true } } },
-  })
-  return team
+  });
+  return team;
 }
 
 export async function updateTeam(newName, teamId) {
@@ -113,15 +113,27 @@ export async function joinTeam(token, userId) {
   return false;
 }
 
-export async function updateMember(team_id, user_id)  {
+export async function updateMember(team_id, user_id) {
   await prisma.teamMembers.update({
-     where: {
-       teamId_userId: {
-         teamId: team_id,
-         userId: user_id.id
-       },
-       role:'LEADER'
-       }
-     })
-   return true
- }
+    where: {
+      teamId_userId: {
+        teamId: team_id,
+        userId: user_id.id,
+      },
+      role: "LEADER",
+    },
+  });
+  return true;
+}
+
+export async function getTeamsOfUser(userId) {
+  const teams = await prisma.teamMembers.findMany({
+    where: {
+      userId: userId,
+    },
+    include: {
+      team: true,
+    },
+  });
+  return teams;
+}
