@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 const secretKey = process.env.SECRET_KEY;
 import * as userModel from "../models/userModel.js";
 import * as teamModel from "../models/teamModel.js";
-import { memberExist, updateMember } from "../models/teamModel";
+import { memberExist, updateMember } from "../models/teamModel.js";
 
 export const loginController = async (req, res) => {
   const { email, password } = req.body;
@@ -47,6 +47,7 @@ export const registerController = async (req, res) => {
         .status(201)
         .json({ message: `User ${createdUser.email} created successfully` });
     } catch (err) {
+      console.log(err)
       res.status(500).json({ error: err });
     }
   }
@@ -66,4 +67,15 @@ export const grantController = async (req, res) => {
   }
   await updateMember(team_id, user_id);
   res.status(200).json({ message: `Successfully updated the role` });
+};
+
+export const updateUserController = async (req, res) => {
+  const { email, userData } = req.body;
+  await updateUser(email, userData);
+    res.status(200).json({ message: "User data updated successfully" });
+};
+export const getController = async (req, res) => {
+  const user = req.user; 
+  user_info=await userModel.getUser(user.email);
+  res.status(200).json({user_info: user_info });
 };
