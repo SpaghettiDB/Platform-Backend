@@ -47,6 +47,17 @@ export const deleteMember = asyncHandler(async (req, res) => {
   }
 });
 
+export const leaveTeam = asyncHandler(async (req, res) => {
+  const { teamId } = req.body;
+  const userEmail = req.user.email;
+    const deletedMember = await teamModel.deleteMember(userEmail, teamId);
+    if (deletedMember) {
+      res.status(201).json({ message: "You left successfully" });
+    } else {
+      res.status(409).json({ message: "You do not exist in the team" });
+    }
+});
+
 export const updateTeam = asyncHandler(async (req, res) => {
   const { newName, teamId } = req.body;
   const userId = req.user.id;
@@ -87,6 +98,7 @@ export const allTeamsOfUser = asyncHandler(async (req, res) => {
       user.teams.map((team) => ({
         role: team.role,
         teamName: team.team.name,
+        teamId: team.team.id
       }))
     );
   } else {
