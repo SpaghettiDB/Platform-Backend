@@ -11,7 +11,7 @@ router
   .delete(tokenAuth, teamController.deleteTeam)
   .put(tokenAuth, teamController.updateTeam);
 router
-  .route("/member")
+  .route("/:teamId/member")
   .get(tokenAuth, teamController.getMembers)
   .put(tokenAuth, teamController.addMember)
   .delete(tokenAuth, teamController.deleteMember);

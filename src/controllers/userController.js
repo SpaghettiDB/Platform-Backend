@@ -9,22 +9,15 @@ export const loginController = async (req, res) => {
   const { email, password } = req.body;
   const user = await userModel.getUser(email);
   if (user === null) {
-    res.status(400).json({ error: "Email does not exist" });
+    res.status(404).json({ error: "Email does not exist" });
   } else {
     try {
       if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign(user, secretKey, {
-          expiresIn: "1h",
-        });
-        res
-          .cookie("access-token", token, {
-            maxAge: 3600000,
-            httpOnly: true,
-          })
-          .json({ accessToken: token });
+        const token = jwt.sign(user, secretKey);
+        res.cookie("token", token).json({ token: token });
       }
     } catch (err) {
-      res.status(400).json({ error: "Invalid password" });
+      res.status(401).json({ error: "Invalid password" });
     }
   }
 };
@@ -54,16 +47,18 @@ export const registerController = async (req, res) => {
 };
 
 export const logoutController = async (req, res) => {
-  res.clearCookie("access-token");
+  res.clearCookie("token");
   res.status(200).json({ message: `Logged out successfully` });
 };
 
 export const grantController = async (req, res) => {
-  const { team_id, user_id} = req.body;
+  const { team_id, user_id } = req.body;
   const existingMember = await memberExist(team_id, user_id);
 
   if (!existingMember) {
-    return res.status(404).json({ message: "No team member with the given user id" });
+    return res
+      .status(404)
+      .json({ message: "No team member with the given user id" });
   }
   await updateMember(team_id, user_id);
   res.status(200).json({ message: `Successfully updated the role` });
@@ -79,3 +74,4 @@ export const getController = async (req, res) => {
   user_info=await userModel.getUser(user.email);
   res.status(200).json({user_info: user_info });
 };
+

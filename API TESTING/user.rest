@@ -1,0 +1,30 @@
+// Register user
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "email": "reem@gmail.com",
+    "username": "reem",
+    "password": "123"
+}
+
+###
+// Login user
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "reem@gmail.com",
+    "password": "123"
+}
+
+###
+// Home Page
+
+GET http://localhost:3000/
+
+###
+// Logout user
+
+POST http://localhost:3000/logout
