@@ -1,26 +1,23 @@
+
 import express from "express";
-import cors from "cors"
+import cors from "cors";
 import userRoute from "./routes/userRoute.js";
 import cookieParser from "cookie-parser";
 import { tokenAuth } from "./middlewares/authMiddleware.js";
 import projectRoute from "./routes/projectRoute.js";
 import DatabaseRoute from "./routes/databaseRoute.js";
 import teamRoute from "./routes/teamRoute.js";
-
+import cors from "cors";
 const app = express();
 const port = 3000;
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-  next();
-});
-
+app.use(cors());
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/", userRoute);

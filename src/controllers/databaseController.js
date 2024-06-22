@@ -47,3 +47,9 @@ export const deleteDatabase = async (req, res) => {
   .status(204)
   .json({ message: "database deleted successfully" });
 };
+
+export const executeQuery = async(req, res) => {
+  const {dataName, query} = req.body
+  console.log(dataName, query)
+  res.send("")
+}

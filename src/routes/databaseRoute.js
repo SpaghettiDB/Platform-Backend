@@ -34,4 +34,6 @@ route.delete(
   control.deleteDatabase
 );
 
+route.post('/query', control.executeQuery)
+
 export default route;

@@ -36,8 +36,8 @@ POST http://localhost:3000/project/create
 Content-Type: application/json
 
 {
-    "teamId": 3,
-    "projectName": "newProject"
+    "teamId": 1,
+    "projectName": "gwwargdfewsfwwgez"
 }
 
 ###
@@ -50,15 +50,15 @@ Content-Type: application/json
     "uuid": "d742cdcd-4802-41e3-9f95-f5bb25a7c774"
 }
 ###
-GET http://localhost:3000/project?teamId=3
+GET http://localhost:3000/project?teamId=1
 ###
-GET http://localhost:3000/project/5
+GET http://localhost:3000/project?userId=1
 ###
 // List members of team
 
 GET http://localhost:3000/team/1/member
 ###
-post  http://localhost:3000/project/delete/5
+DELETE http://localhost:3000/project/delete/1
 
 
 //______________________________________________________
@@ -87,6 +87,9 @@ Content-Type: application/json
 }
 
 ###
+# Get Teams
+
+GET hhtp://localhost:3000/team?userId=1
 // Create team
 
 POST http://localhost:3000/team
