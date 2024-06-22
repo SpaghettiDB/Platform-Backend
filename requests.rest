@@ -36,8 +36,8 @@ POST http://localhost:3000/project/create
 Content-Type: application/json
 
 {
-    "teamId": 1,
-    "projectName": "gwwargdfewsfwwgez"
+    "teamId": 3,
+    "projectName": "newProject"
 }
 
 ###
@@ -50,15 +50,15 @@ Content-Type: application/json
     "uuid": "d742cdcd-4802-41e3-9f95-f5bb25a7c774"
 }
 ###
-GET http://localhost:3000/project?teamId=1
+GET http://localhost:3000/project?teamId=3
 ###
-GET http://localhost:3000/project?userId=1
+GET http://localhost:3000/project/5
 ###
 // List members of team
 
 GET http://localhost:3000/team/1/member
 ###
-DELETE http://localhost:3000/project/delete/1
+post  http://localhost:3000/project/delete/5
 
 
 //______________________________________________________
@@ -70,7 +70,7 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "email": "s@g.com",
+    "email": "s12@g.com",
     "username": "salma",
     "password": "1234"
 }
@@ -82,32 +82,29 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "email": "s@g.com",
+    "email": "s12@g.com",
     "password": "1234"
 }
 
 ###
-# Get Teams
-
-GET hhtp://localhost:3000/team?userId=1
 // Create team
-
+//0eb7f723
 POST http://localhost:3000/team
 Content-Type: application/json
 
 {
-    "teamName": "team9"
+    "teamName": "t"
 }
 
 ###
 // Add member to team
 
-PUT http://localhost:3000/team/member
+PUT http://localhost:3000/team/27/member
 Content-Type: application/json
 
 {
     "memberEmail": "amr11@g.com",
-    "teamId": 5
+    "teamId": 27
 }
 
 ###
@@ -117,10 +114,10 @@ PUT http://localhost:3000/team/code
 Content-Type: application/json
 
 {
-    "teamId": 9
+    "teamId": 53
 }
 
-
+//2f353502
 ###
 // Join a team
 
@@ -128,7 +125,7 @@ PUT http://localhost:3000/team/join
 Content-Type: application/json
 
 {
-    "token": "2c1ce63e"
+    "token": "2f353502"
 }
 
 
@@ -146,7 +143,7 @@ Content-Type: application/json
 ###
 // Get all users of the team
 
-GET http://localhost:3000/team/1/member
+GET http://localhost:3000/team/10/member
 Content-Type: application/json
 
 
@@ -179,7 +176,7 @@ DELETE  http://localhost:3000/team
 Content-Type: application/json
 
 {
-    "teamId": 8
+    "teamId": 29
 }
 
 ###
@@ -194,4 +191,24 @@ Content-Type: application/json
     "projectName": "project2"
 }
 
+###
+
+
+
+// Create Project
+
+POST http://localhost:3000/project/create
+Content-Type: application/json
+
+{
+    "teamId": 30,
+    "projectName": "newProject"
+}
+
+###
+
+// listProjects
+
+GET http://localhost:3000/project?teamId=12
+Content-Type: application/json
 ###
