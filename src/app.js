@@ -7,7 +7,7 @@ import { tokenAuth } from "./middlewares/authMiddleware.js";
 import projectRoute from "./routes/projectRoute.js";
 import DatabaseRoute from "./routes/databaseRoute.js";
 import teamRoute from "./routes/teamRoute.js";
-import cors from "cors";
+// import cors from "cors";
 const app = express();
 const port = 3000;
 app.use(cors());

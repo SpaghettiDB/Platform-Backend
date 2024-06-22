@@ -69,9 +69,9 @@ export const updateUserController = async (req, res) => {
   await updateUser(email, userData);
     res.status(200).json({ message: "User data updated successfully" });
 };
-export const getController = async (req, res) => {
-  const user = req.user; 
-  user_info=await userModel.getUser(user.email);
-  res.status(200).json({user_info: user_info });
-};
+// export const getController = async (req, res) => {
+//   const user = req.user; 
+//   user_info=await userModel.getUser(user.email);
+//   res.status(200).json({user_info: user_info });
+// };
 

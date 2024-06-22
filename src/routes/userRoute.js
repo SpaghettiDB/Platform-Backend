@@ -5,7 +5,7 @@ import {
   logoutController,
   grantController,
   updateUserController,
-  getController
+  // getController
 
 } from "../controllers/userController.js";
 //import { tokenAuth } from "../middlewares/authMiddleware.js";
@@ -16,6 +16,6 @@ route.post("/register",  registerController);
 route.post("/logout",  logoutController);
 route.post("/grant",  grantController);
 route.put("/update",updateUserController)
-route.get("/",getController)
+// route.get("/",getController)
 
 export default route;
