@@ -17,5 +17,6 @@ router
   .delete(tokenAuth, teamController.deleteMember);
 router.put("/join", tokenAuth, teamController.joinTeam);
 router.put("/code", tokenAuth, teamController.teamToken);
+router.delete("/leave", tokenAuth, teamController.leaveTeam);
 
 export default router;

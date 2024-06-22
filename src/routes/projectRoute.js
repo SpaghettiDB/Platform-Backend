@@ -18,6 +18,7 @@ route.post("/create", tokenAuth, createProject);
 route.post("/:id/update", tokenAuth, updateProject);
 route.delete("/delete/:id", tokenAuth, deleteProject);
 route.post("/join", tokenAuth, joinProject);
+route.get("/team", tokenAuth, listProjectsOfTeam);
 route.get("/:projectID", tokenAuth, getProject);
 route.get("/", tokenAuth, listProjectsOfUser);
 route.get("/:projectID/users/:userID", tokenAuth, getUserProject);

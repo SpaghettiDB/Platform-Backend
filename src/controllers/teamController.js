@@ -1,5 +1,5 @@
 import * as teamModel from "../models/teamModel.js";
-import { getUserById } from "../models/userModel.js";
+import { getUser } from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
 
 export async function isLeader(teamId, userId) {
@@ -93,11 +93,16 @@ export const getMembers = asyncHandler(async (req, res) => {
 });
 
 export const allTeamsOfUser = asyncHandler(async (req, res) => {
-  const userId = parseInt(req.query.userId);
-  const user = await getUserById(userId);
-  const teams = await teamModel.getTeamsOfUser(userId);
-  if (teams.length > 0) {
-    res.status(200).json(teams);
+  const email = req.user.email;
+  const user = await getUser(email);
+  if (user.teams) {
+    res.status(200).json(
+      user.teams.map((team) => ({
+        role: team.role,
+        teamName: team.team.name,
+        teamId: team.team.id
+      }))
+    );
   } else {
     res.status(409).json({ message: "No teams found" });
   }
