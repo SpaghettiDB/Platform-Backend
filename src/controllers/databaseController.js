@@ -49,7 +49,22 @@ export const deleteDatabase = async (req, res) => {
 };
 
 export const executeQuery = async(req, res) => {
-  const {dataName, query} = req.body
-  console.log(dataName, query)
-  res.send("")
+  const {dataName, query, dataId} = req.body
+  await new Promise(resolve => setTimeout(resolve, 3500));
+  res.json({
+    error: "",
+    data: [
+      ["Column1", "Column2", "Column3", "Column4", "Column5", "Column6", "Column7", "Column8", "Column9", "Column10", "Column11", "Column12", "Column13", "Column14", "Column15", "Column16", "Column17", "Column18", "Column19", "Column20"], 
+  [1, "A", "true", 1, "A", "true", 1, "A", "true", 1, "A", 1, "A", "true", 1, "A", "true", 1, "A", "true"],
+  [2, "B", "false", 2, "B", "false", 2, "B", "false", 2, "B", 2, "B", "false", 2, "B", "false", 2, "B", "false"],
+  [3, "C", "true", 3, "C", "true", 3, "C", "true", 3, "C", 3, "C", "true", 3, "C", "true", 3, "C", "true"],
+  [4, "D", "false", 4, "D", "false", 4, "D", "false", 4, "D", 4, "D", "false", 4, "D", "false", 4, "D", "false"],
+  [5, "E", "true", 5, "E", "true", 5, "E", "true", 5, "E", 5, "E", "true", 5, "E", "true", 5, "E", "true"],
+  [6, "F", "false", 6, "F", "false", 6, "F", "false", 6, "F", 6, "F", "false", 6, "F", "false", 6, "F", "false"],
+  [7, "G", "true", 7, "G", "true", 7, "G", "true", 7, "G", 7, "G", "true", 7, "G", "true", 7, "G", "true"],
+  [8, "H", "false", 8, "H", "false", 8, "H", "false", 8, "H", 8, "H", "false", 8, "H", "false", 8, "H", "false"],
+  [9, "I", "true", 9, "I", "true", 9, "I", "true", 9, "I", 9, "I", "true", 9, "I", "true", 9, "I", "true"],
+  [10, "J", "false", 10, "J", "false", 10, "J", "false", 10, "J", 10, "J", "false", 10, "J", "false", 10, "J", "false"],
+    ]
+  })
 }
