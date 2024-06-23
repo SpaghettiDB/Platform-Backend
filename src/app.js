@@ -9,8 +9,15 @@ import teamRoute from "./routes/teamRoute.js";
 import cors from "cors";
 const app = express();
 const port = 3000;
-app.use(cors());
+
+//app.use(cors());
 app.use(express.json());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/", userRoute);
