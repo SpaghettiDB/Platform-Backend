@@ -18,7 +18,8 @@ export const createTeam = asyncHandler(async (req, res) => {
 });
 
 export const addMember = asyncHandler(async (req, res) => {
-  const { memberEmail, teamId } = req.body;
+  const { memberEmail } = req.body;
+  const teamId = +req.params.teamId;
   const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const addedMember = await teamModel.addMember(memberEmail, teamId);
@@ -33,7 +34,8 @@ export const addMember = asyncHandler(async (req, res) => {
 });
 
 export const deleteMember = asyncHandler(async (req, res) => {
-  const { memberEmail, teamId } = req.body;
+  const { memberEmail } = req.body;
+  const teamId = +req.params.teamId;
   const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const deletedMember = await teamModel.deleteMember(memberEmail, teamId);

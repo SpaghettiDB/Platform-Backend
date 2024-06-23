@@ -99,12 +99,12 @@ Content-Type: application/json
 ###
 // Add member to team
 
-PUT http://localhost:3000/team/27/member
+PUT http://localhost:3000/team/5/member
 Content-Type: application/json
 
 {
-    "memberEmail": "amr11@g.com",
-    "teamId": 27
+    "memberEmail": "s@g.com",
+    "teamId": 5
 }
 
 ###
@@ -117,7 +117,6 @@ Content-Type: application/json
     "teamId": 53
 }
 
-//2f353502
 ###
 // Join a team
 
@@ -143,7 +142,7 @@ Content-Type: application/json
 ###
 // Get all users of the team
 
-GET http://localhost:3000/team/10/member
+GET http://localhost:3000/team/5/member
 Content-Type: application/json
 
 
@@ -155,18 +154,13 @@ Content-Type: application/json
 
 ###
 
-
-DELETE  http://localhost:3000/database/c7abcf80-a9e6-40c6-ba40-2e4231a05693?projectId=5
-###
 // Delete member from team
-
-DELETE  http://localhost:3000/team/member
+DELETE  http://localhost:3000/team/5/member
 Content-Type: application/json
 
 {
-    "memberEmail": "amr11@g.com",
-    "teamId": 4
-}
+    "memberEmail": "s@g.com"
+    }
 
 
 ###
@@ -180,8 +174,6 @@ Content-Type: application/json
 }
 
 ###
-// Delete member from team
-
 
 POST http://localhost:3000/project/create
 Content-Type: application/json
