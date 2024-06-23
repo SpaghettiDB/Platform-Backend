@@ -15,7 +15,7 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "email": "amr11@g.com",
+    "email": "amr12@g.com",
     "password": "1234"
 }
 
@@ -143,7 +143,7 @@ Content-Type: application/json
 ###
 // Get all users of the team
 
-GET http://localhost:3000/team/10/member
+GET http://localhost:3000/team/1/member
 Content-Type: application/json
 
 
@@ -160,12 +160,12 @@ DELETE  http://localhost:3000/database/c7abcf80-a9e6-40c6-ba40-2e4231a05693?proj
 ###
 // Delete member from team
 
-DELETE  http://localhost:3000/team/member
+DELETE  http://localhost:3000/team/1/member
 Content-Type: application/json
 
 {
     "memberEmail": "amr11@g.com",
-    "teamId": 4
+    "teamId": 1
 }
 
 
