@@ -8,18 +8,17 @@ import { memberExist, updateMember } from "../models/teamModel.js";
 export const loginController = async (req, res) => {
   const { email, password } = req.body;
   const userObject = await userModel.getUser(email);
-  const user = {
-    email: email,
-    password: userObject.password,
-    name: userObject.name,
-    id: userObject.id,
-  };
   if (userObject === null) {
     res.status(404).json({ error: "Email does not exist" });
   } else {
     try {
+      const user = {
+        email: email,
+        password: userObject.password,
+        name: userObject.name,
+        id: userObject.id,
+      };
       if (await bcrypt.compare(password, user.password)) {
-        console.log(user);
         const token = jwt.sign(user, secretKey);
         res.cookie("token", token).json({ token: token });
       }
