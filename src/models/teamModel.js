@@ -15,6 +15,9 @@ export async function memberExist(teamId, userId) {
 }
 
 export async function createTeam(teamName, leaderId) {
+  if (!teamName) {
+    throw new Error("Team name is required");
+  }
   const team = await prisma.team.create({
     data: {
       name: teamName,
@@ -72,6 +75,9 @@ export async function getTeam(teamId) {
 }
 
 export async function updateTeam(newName, teamId) {
+  if (!newName) {
+    throw new Error("New name is required");
+  }
   const team = await prisma.team.update({
     where: { id: teamId },
     data: { name: newName },

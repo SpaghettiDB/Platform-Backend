@@ -1,5 +1,5 @@
 import * as teamModel from "../models/teamModel.js";
-import { getUserById } from "../models/userModel.js";
+import { getUser } from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
 
 export async function isLeader(teamId, userId) {
@@ -18,7 +18,8 @@ export const createTeam = asyncHandler(async (req, res) => {
 });
 
 export const addMember = asyncHandler(async (req, res) => {
-  const { memberEmail, teamId } = req.body;
+  const { memberEmail } = req.body;
+  const teamId = +req.params.teamId;
   const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const addedMember = await teamModel.addMember(memberEmail, teamId);
@@ -33,7 +34,8 @@ export const addMember = asyncHandler(async (req, res) => {
 });
 
 export const deleteMember = asyncHandler(async (req, res) => {
-  const { memberEmail, teamId } = req.body;
+  const { memberEmail } = req.body;
+  const teamId = +req.params.teamId;
   const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const deletedMember = await teamModel.deleteMember(memberEmail, teamId);
@@ -45,6 +47,17 @@ export const deleteMember = asyncHandler(async (req, res) => {
   } else {
     res.status(401).json({ message: "Unauthorized: user is not LEADER" });
   }
+});
+
+export const leaveTeam = asyncHandler(async (req, res) => {
+  const { teamId } = req.body;
+  const userEmail = req.user.email;
+    const deletedMember = await teamModel.deleteMember(userEmail, teamId);
+    if (deletedMember) {
+      res.status(201).json({ message: "You left successfully" });
+    } else {
+      res.status(409).json({ message: "You do not exist in the team" });
+    }
 });
 
 export const updateTeam = asyncHandler(async (req, res) => {
@@ -82,11 +95,16 @@ export const getMembers = asyncHandler(async (req, res) => {
 });
 
 export const allTeamsOfUser = asyncHandler(async (req, res) => {
-  const userId = parseInt(req.query.userId);
-  const user = await getUserById(userId);
-  const teams = await teamModel.getTeamsOfUser(userId);
-  if (teams.length > 0) {
-    res.status(200).json(teams);
+  const email = req.user.email;
+  const user = await getUser(email);
+  if (user.teams) {
+    res.status(200).json(
+      user.teams.map((team) => ({
+        role: team.role,
+        teamName: team.team.name,
+        teamId: team.team.id
+      }))
+    );
   } else {
     res.status(409).json({ message: "No teams found" });
   }

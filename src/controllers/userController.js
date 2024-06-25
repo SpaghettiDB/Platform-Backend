@@ -7,11 +7,17 @@ import { memberExist, updateMember } from "../models/teamModel.js";
 
 export const loginController = async (req, res) => {
   const { email, password } = req.body;
-  const user = await userModel.getUser(email);
-  if (user === null) {
+  const userObject = await userModel.getUser(email);
+  if (userObject === null) {
     res.status(404).json({ error: "Email does not exist" });
   } else {
     try {
+      const user = {
+        email: email,
+        password: userObject.password,
+        name: userObject.name,
+        id: userObject.id,
+      };
       if (await bcrypt.compare(password, user.password)) {
         const token = jwt.sign(user, secretKey);
         res.cookie("token", token).json({ token: token });
@@ -40,7 +46,7 @@ export const registerController = async (req, res) => {
         .status(201)
         .json({ message: `User ${createdUser.email} created successfully` });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.status(500).json({ error: err });
     }
   }
@@ -67,11 +73,10 @@ export const grantController = async (req, res) => {
 export const updateUserController = async (req, res) => {
   const { email, userData } = req.body;
   await updateUser(email, userData);
-    res.status(200).json({ message: "User data updated successfully" });
+  res.status(200).json({ message: "User data updated successfully" });
 };
-export const getController = async (req, res) => {
-  const user = req.user; 
-  user_info=await userModel.getUser(user.email);
-  res.status(200).json({user_info: user_info });
-};
-
+// export const getController = async (req, res) => {
+//   const user = req.user;
+//   user_info=await userModel.getUser(user.email);
+//   res.status(200).json({user_info: user_info });
+// };
