@@ -4,6 +4,7 @@ import {
   registerController,
   logoutController,
   grantController,
+  updateUserController,
   updateUserController
 } from "../controllers/userController.js";
 
@@ -14,4 +15,5 @@ route.post("/register",  registerController);
 route.post("/logout",  logoutController);
 route.post("/grant",  grantController);
 route.put("/update",updateUserController)
+
 export default route;
