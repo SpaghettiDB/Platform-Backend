@@ -87,6 +87,18 @@ Content-Type: application/json
 }
 
 ###
+//update user
+PUT http://localhost:3000/update
+Content-Type: application/json
+
+{
+    "email": "s@g.com",
+    "username": "salma",
+    "password": "1234"
+}
+
+
+###
 // Create team
 //0eb7f723
 POST http://localhost:3000/team

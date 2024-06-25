@@ -9,6 +9,7 @@ import DatabaseRoute from "./routes/databaseRoute.js";
 import teamRoute from "./routes/teamRoute.js";
 const app = express();
 const port = 3000;
+
 app.use(express.json());
 app.use(
   cors({

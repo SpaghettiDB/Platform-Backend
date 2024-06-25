@@ -19,8 +19,16 @@ export const loginController = async (req, res) => {
         id: userObject.id,
       };
       if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign(user, secretKey);
-        res.cookie("token", token).json({ token: token });
+        const token = jwt.sign(user, secretKey, {
+          expiresIn: "1h",
+        });
+        res
+          .cookie("token", token, {
+            maxAge: 3600000,
+            httpOnly: true,
+          })
+          .json({ Token: token });
+
       }
     } catch (err) {
       res.status(401).json({ error: "Invalid password" });
@@ -46,7 +54,6 @@ export const registerController = async (req, res) => {
         .status(201)
         .json({ message: `User ${createdUser.email} created successfully` });
     } catch (err) {
-      console.log(err);
       res.status(500).json({ error: err });
     }
   }
@@ -71,12 +78,21 @@ export const grantController = async (req, res) => {
 };
 
 export const updateUserController = async (req, res) => {
-  const { email, userData } = req.body;
-  await updateUser(email, userData);
-  res.status(200).json({ message: "User data updated successfully" });
+  const { newEmail, newPassword, newName } = req.body;
+   const hashedPassword = await bcrypt.hash(newPassword, 10);
+    try {
+      const updatedUser = await userModel.updateUser(
+        newEmail,
+        {
+        name: newName,
+        password: hashedPassword,
+      });
+      res
+        .status(201)
+        .json({ message: `User ${updatedUser.name} modified successfully` });
+    } catch (err) {
+     
+      res.status(500).json({ error: err });
+    }
 };
-// export const getController = async (req, res) => {
-//   const user = req.user;
-//   user_info=await userModel.getUser(user.email);
-//   res.status(200).json({user_info: user_info });
-// };
+
