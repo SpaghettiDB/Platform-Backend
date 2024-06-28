@@ -41,7 +41,7 @@ export const registerController = async (req, res) => {
         name: username,
         password: hashedPassword,
       });
-      await teamModel.createTeam(createdUser.id, createdUser.name);
+      await teamModel.createTeam(createdUser.name, createdUser.id);
       res
         .status(201)
         .json({ message: `User ${createdUser.email} created successfully` });
