@@ -1,19 +1,18 @@
-import express from "express";
+import express from 'express'
 import {
   loginController,
   registerController,
   logoutController,
   grantController,
-  updateUserController,
   updateUserController
-} from "../controllers/userController.js";
+} from '../controllers/userController.js'
 
-const route = express.Router();
+const route = express.Router()
 
-route.post("/login",loginController);
-route.post("/register",  registerController);
-route.post("/logout",  logoutController);
-route.post("/grant",  grantController);
-route.put("/update",updateUserController)
+route.post('/login', loginController)
+route.post('/register', registerController)
+route.post('/logout', logoutController)
+route.post('/grant', grantController)
+route.put('/update', updateUserController)
 
-export default route;
+export default route
