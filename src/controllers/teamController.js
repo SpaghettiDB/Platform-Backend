@@ -18,7 +18,8 @@ export const createTeam = asyncHandler(async (req, res) => {
 });
 
 export const addMember = asyncHandler(async (req, res) => {
-  const { memberEmail, teamId } = req.body;
+  const { memberEmail } = req.body;
+  const teamId = +req.params.teamId;
   const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const addedMember = await teamModel.addMember(memberEmail, teamId);
@@ -33,7 +34,8 @@ export const addMember = asyncHandler(async (req, res) => {
 });
 
 export const deleteMember = asyncHandler(async (req, res) => {
-  const { memberEmail, teamId } = req.body;
+  const { memberEmail } = req.body;
+  const teamId = +req.params.teamId;
   const userId = req.user.id;
   if (await isLeader(teamId, userId)) {
     const deletedMember = await teamModel.deleteMember(memberEmail, teamId);
@@ -45,6 +47,17 @@ export const deleteMember = asyncHandler(async (req, res) => {
   } else {
     res.status(401).json({ message: "Unauthorized: user is not LEADER" });
   }
+});
+
+export const leaveTeam = asyncHandler(async (req, res) => {
+  const { teamId } = req.body;
+  const userEmail = req.user.email;
+    const deletedMember = await teamModel.deleteMember(userEmail, teamId);
+    if (deletedMember) {
+      res.status(201).json({ message: "You left successfully" });
+    } else {
+      res.status(409).json({ message: "You do not exist in the team" });
+    }
 });
 
 export const updateTeam = asyncHandler(async (req, res) => {
@@ -70,9 +83,15 @@ export const deleteTeam = asyncHandler(async (req, res) => {
 });
 
 export const getMembers = asyncHandler(async (req, res) => {
-  const { teamId } = req.body;
-  const team = await teamModel.getTeam(teamId);
-  res.status(200).json(team[0].members.map((member) => member.user.email));
+  const { teamId } = req.params;
+  const team = await teamModel.getTeam(+teamId);
+  res.status(200).json(
+    team.members.map((member) => ({
+      email: member.user.email,
+      name: member.user.name,
+      role: member.role,
+    }))
+  );
 });
 
 export const allTeamsOfUser = asyncHandler(async (req, res) => {
@@ -83,6 +102,7 @@ export const allTeamsOfUser = asyncHandler(async (req, res) => {
       user.teams.map((team) => ({
         role: team.role,
         teamName: team.team.name,
+        teamId: team.team.id
       }))
     );
   } else {

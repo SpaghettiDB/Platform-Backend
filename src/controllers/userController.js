@@ -7,11 +7,17 @@ import { memberExist, updateMember } from "../models/teamModel.js";
 
 export const loginController = async (req, res) => {
   const { email, password } = req.body;
-  const user = await userModel.getUser(email);
-  if (user === null) {
-    res.status(400).json({ error: "Email does not exist" });
+  const userObject = await userModel.getUser(email);
+  if (userObject === null) {
+    res.status(404).json({ error: "Email does not exist" });
   } else {
     try {
+      const user = {
+        email: email,
+        password: userObject.password,
+        name: userObject.name,
+        id: userObject.id,
+      };
       if (await bcrypt.compare(password, user.password)) {
         const token = jwt.sign(user, secretKey, {
           expiresIn: "1h",
@@ -22,9 +28,10 @@ export const loginController = async (req, res) => {
             httpOnly: true,
           })
           .json({ Token: token });
+
       }
     } catch (err) {
-      res.status(400).json({ error: "Invalid password" });
+      res.status(401).json({ error: "Invalid password" });
     }
   }
 };
@@ -47,7 +54,6 @@ export const registerController = async (req, res) => {
         .status(201)
         .json({ message: `User ${createdUser.email} created successfully` });
     } catch (err) {
-
       res.status(500).json({ error: err });
     }
   }
@@ -59,11 +65,13 @@ export const logoutController = async (req, res) => {
 };
 
 export const grantController = async (req, res) => {
-  const { team_id, user_id} = req.body;
+  const { team_id, user_id } = req.body;
   const existingMember = await memberExist(team_id, user_id);
 
   if (!existingMember) {
-    return res.status(404).json({ message: "No team member with the given user id" });
+    return res
+      .status(404)
+      .json({ message: "No team member with the given user id" });
   }
   await updateMember(team_id, user_id);
   res.status(200).json({ message: `Successfully updated the role` });
@@ -87,3 +95,4 @@ export const updateUserController = async (req, res) => {
       res.status(500).json({ error: err });
     }
 };
+
