@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 const secretKey = process.env.SECRET_KEY;
 import * as userModel from "../models/userModel.js";
-import * as teamModel from "../models/teamModel.js";
 import { memberExist, updateMember } from "../models/teamModel.js";
 
 export const loginController = async (req, res) => {
@@ -41,7 +40,6 @@ export const registerController = async (req, res) => {
         name: username,
         password: hashedPassword,
       });
-      // await teamModel.createTeam(createdUser.name, createdUser.id);
       res
         .status(201)
         .json({ message: `User ${createdUser.email} created successfully` });
@@ -57,15 +55,16 @@ export const logoutController = async (req, res) => {
 };
 
 export const grantController = async (req, res) => {
-  const { team_id, user_id } = req.body;
-  const existingMember = await memberExist(team_id, user_id);
+  const { teamId, memberEmail } = req.body;
+  const userId = await userModel.getUserId(memberEmail);
+  const existingMember = await memberExist( teamId, userId.id );
 
   if (!existingMember) {
     return res
       .status(404)
       .json({ message: "No team member with the given user id" });
   }
-  await updateMember(team_id, user_id);
+  await updateMember(teamId, userId.id);
   res.status(200).json({ message: `Successfully updated the role` });
 };
 
