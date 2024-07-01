@@ -120,16 +120,18 @@ export async function joinTeam(token, userId) {
 }
 
 export async function updateMember(team_id, user_id) {
-  await prisma.teamMembers.update({
+  const member = await prisma.teamMembers.update({
     where: {
       teamId_userId: {
         teamId: team_id,
-        userId: user_id.id,
+        userId: user_id,
       },
+    },
+    data: {
       role: "LEADER",
     },
   });
-  return true;
+  return member;
 }
 
 export async function getTeamsOfUser(userId) {

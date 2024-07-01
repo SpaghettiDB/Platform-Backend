@@ -3,8 +3,8 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "email": "amr11@g.com",
-    "username": "amr",
+    "email": "salma@gmail.com",
+    "username": "Salma Mahmoud",
     "password": "1234"
 }
 
@@ -15,7 +15,7 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "email": "reem@gmail.com",
+    "email": "john@gmail.com",
     "password": "1234"
 }
 
@@ -70,8 +70,8 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "email": "s12@g.com",
-    "username": "salma",
+    "email": "michael@gmail.com",
+    "username": "Michael Queryslinger",
     "password": "1234"
 }
 
@@ -82,7 +82,7 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "email": "khattab@gmail.com",
+    "email": "sarah@gmail.com",
     "password": "1234"
 }
 
@@ -105,18 +105,18 @@ POST http://localhost:3000/team
 Content-Type: application/json
 
 {
-    "teamName": "<3"
+    "teamName": "Query Warriors"
 }
 
 ###
 // Add member to team
 
-PUT http://localhost:3000/team/27/member
+PUT http://localhost:3000/team/16/member
 Content-Type: application/json
 
 {
-    "memberEmail": "amr11@g.com",
-    "teamId": 27
+    "memberEmail": "salmamahmoud@gmail.com",
+    "teamId": 16
 }
 
 ###
